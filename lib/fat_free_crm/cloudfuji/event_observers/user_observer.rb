@@ -1,7 +1,7 @@
 module FatFreeCRM
   module Cloudfuji
     module EventObservers
-      class UserObserver < Cloudfuji::EventObserver
+      class UserObserver < ::Cloudfuji::EventObserver
         def user_added
           puts "Adding a new user with incoming data #{params.inspect}"
           puts "Authlogic username column: #{::Authlogic::Cas.cas_username_column}="

@@ -1,7 +1,7 @@
 module FatFreeCRM
   module Cloudfuji
     module EventObservers
-      class CustomerObserver < Cloudfuji::EventObserver
+      class CustomerObserver < ::Cloudfuji::EventObserver
         # "customer_created"
         # :account_balance => 0
         # :object          => "customer"

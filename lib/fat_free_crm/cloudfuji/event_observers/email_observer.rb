@@ -1,7 +1,7 @@
 module FatFreeCRM
   module Cloudfuji
     module EventObservers
-      class EmailObserver < Cloudfuji::EventObserver
+      class EmailObserver < ::Cloudfuji::EventObserver
         # NOTE: It'd be nice to have a before_filter.
 
         # "email_delivered"
