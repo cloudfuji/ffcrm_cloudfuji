@@ -4,7 +4,6 @@ PATH
     ffcrm_cloudfuji (0.1.1)
       authlogic_cloudfuji (~> 0.9)
       cloudfuji
-      fat_free_crm (>= 0.11.3)
 
 GEM
   remote: http://rubygems.org/

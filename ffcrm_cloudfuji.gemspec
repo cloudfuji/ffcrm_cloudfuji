@@ -12,7 +12,6 @@ Gem::Specification.new do |s|
   s.files = `git ls-files`.split("\n")
   s.version = FatFreeCRM::Cloudfuji::VERSION
 
-  s.add_dependency 'fat_free_crm', '>= 0.11.3'
   s.add_dependency 'cloudfuji'
   s.add_dependency 'authlogic_cloudfuji', '~> 0.9'
 
