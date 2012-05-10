@@ -4,7 +4,9 @@ require 'fat_free_crm/cloudfuji/version'
 
 Gem::Specification.new do |s|
   s.name = 'ffcrm_cloudfuji'
-  s.authors = ['Nathan Broadbent']
+  s.authors = ['Sean Grove', 'Nathan Broadbent']
+  s.email = 's@cloudfuji.com'
+  s.homepage = 'http://cloudfuji.com'
   s.summary = 'Fat Free CRM - Cloudfuji Integration'
   s.description = 'Integrates Fat Free CRM with the Cloudfuji hosting platform.'
   s.files = `git ls-files`.split("\n")
