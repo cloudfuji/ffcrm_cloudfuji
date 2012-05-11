@@ -30,7 +30,7 @@ module FatFreeCRM
         def email_opened
           message  = ""
           message += "Email opened by #{recipient}"
-          message += " in email campaign '#{campaign.titleize}" if campaign
+          message += " in email campaign '#{campaign.titleize}'" if campaign
 
           note_email_activity( message.strip )
         end
@@ -47,7 +47,7 @@ module FatFreeCRM
         # :human=>"s+cfdemo@cloudfuji.com clicked on link in Cloudfuji Buddies to https://cloudfuji.com/cas/invite/?invitation_token=8hswc7kqhPys6FsUJ1Nm&service=https://cloudfuji.com/users/service&redirect=https://cloudfuji.com/apps/new?app=fat_free_crm&src=icon"}
         def email_clicked
           message = "#{recipient} clicked #{data['url']}"
-          message += "in email campaign '#{campaign.titleize}" if campaign
+          message += "in email campaign '#{campaign.titleize}'" if campaign
 
           note_email_activity(message)
         end
