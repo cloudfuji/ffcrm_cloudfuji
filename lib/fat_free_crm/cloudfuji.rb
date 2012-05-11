@@ -1,6 +1,3 @@
-require 'cloudfuji'
-require 'authlogic_cloudfuji'
-
 module FatFreeCRM
   module Cloudfuji
     class << self
