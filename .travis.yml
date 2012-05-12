@@ -4,4 +4,4 @@ rvm:
   - 1.9.3
 
 before_script:
-  - sh -c "psql -c 'create database fat_free_crm_test;' -U postgres"
+  - sh -c "psql -c 'create database ffcrm_cloudfuji_test;' -U postgres"
