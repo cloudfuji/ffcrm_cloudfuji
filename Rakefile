@@ -4,7 +4,6 @@ begin
 rescue LoadError
   puts 'You must `gem install bundler` and `bundle install` to run rake tasks'
 end
-require 'rails'
 Bundler.require :default, :development
 
 task :environment do
@@ -17,12 +16,6 @@ class Combustion::Application
   Railties.engines.each do |engine|
     config.paths['db/migrate'] += engine.paths['db/migrate'].existent
   end
-end
-
-require "rspec/core/rake_task"
-RSpec::Core::RakeTask.new(:spec) do |spec|
-  spec.pattern = Dir.glob(['spec/sitemap_generator/**/*'])
-  spec.rspec_opts = ['--backtrace']
 end
 
 desc 'Default: run spec tests.'

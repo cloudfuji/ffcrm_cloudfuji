@@ -1,4 +1,5 @@
 # Gem Dependencies
+require 'rails/all'
 require 'cloudfuji'
 require 'authlogic_cloudfuji'
 
