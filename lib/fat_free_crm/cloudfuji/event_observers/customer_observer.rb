@@ -31,6 +31,10 @@ module FatFreeCRM
           params['data']
         end
 
+        def recipient
+          data['recipient']
+        end
+
         def find_or_create_activity_subject!
           lookups = [Account, Lead, Contact]
           lookups.each do |model|
@@ -46,7 +50,7 @@ module FatFreeCRM
           lead.first_name ||= data['first_name'] || recipient.split("@").first if lead.first_name.blank?
           lead.last_name  ||= data['last_name']  || recipient.split("@").last  if lead.last_name.blank?
 
-          lead.save
+          lead.save!
 
           lead
         end
