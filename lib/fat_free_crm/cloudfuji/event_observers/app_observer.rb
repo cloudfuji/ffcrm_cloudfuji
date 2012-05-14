@@ -9,7 +9,7 @@ module FatFreeCRM
           data = params['data']
           ido_id = data.try(:[], 'ido_id')
 
-          if user = User.find_by_email(data['email'])
+          if user = User.find(:first, :conditions => ["email = ? OR ido_id = ?", data['email'], data['ido_id']])
             puts "Updating #{user.inspect} with incoming data #{params.inspect}" if debug
           else
             user = User.new
