@@ -13,6 +13,9 @@ ffcrm_spec = Gem::Specification.find_by_name("fat_free_crm")
 Dir[ffcrm_spec.gem_dir + "/spec/factories/*.rb"].each {|factory| require factory }
 
 Combustion.initialize!
+# Reload User model after schema is loaded,
+# so that Authlogic detects password fields
+load 'user.rb'
 
 RSpec.configure do |config|
   config.use_transactional_fixtures = true
