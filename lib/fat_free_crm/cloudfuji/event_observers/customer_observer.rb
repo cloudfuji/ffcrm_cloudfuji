@@ -21,8 +21,11 @@ module FatFreeCRM
         private
 
         def note_customer_activity(message)
+          # Be verbose in development environment
+          @debug = Rails.env == 'development'
+
           subject = find_or_create_activity_subject!
-          puts "Found subject: #{subject.inspect}"
+          puts "Found subject: #{subject.inspect}" if @debug
 
           subject.versions.create! :event => message
         end
@@ -31,24 +34,20 @@ module FatFreeCRM
           params['data']
         end
 
-        def recipient
-          data['recipient']
-        end
-
         def find_or_create_activity_subject!
           lookups = [Account, Lead, Contact]
           lookups.each do |model|
-            puts "#{model}.find_by_email( #{data['email']} )"
+            puts "#{model}.find_by_email( #{data['email']} )" if @debug
             result = model.find_by_email(data['email'])
             return result if result
           end
 
-          lead = Lead.find_by_email(data['email'])
+          lead = Lead.find_by_email(data['email']) || Lead.new
           lead ||= Lead.new
 
-          lead.email        = data['email']
-          lead.first_name ||= data['first_name'] || recipient.split("@").first if lead.first_name.blank?
-          lead.last_name  ||= data['last_name']  || recipient.split("@").last  if lead.last_name.blank?
+          lead.email      = data['email']
+          lead.first_name = data['first_name'] || data['email'].split("@").first if lead.first_name.blank?
+          lead.last_name  = data['last_name']  || data['email'].split("@").last  if lead.last_name.blank?
 
           lead.save!
 
