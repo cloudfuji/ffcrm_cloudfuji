@@ -8,6 +8,9 @@
         = f.fields_for i.to_s, rule do |r|
           = render "form", :r => r, :index => i
 
-    .buttonbar
+    .buttonbar.lead_scoring_buttons
       = add_lead_scoring_rule_button(f)
-      = submit_tag 'Save', :name => :save
+      .save_or_cancel
+        = submit_tag 'Save', :name => :save
+        #{t :or}
+        = link_to "Cancel", admin_lead_scoring_index_path

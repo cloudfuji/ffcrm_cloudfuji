@@ -1,12 +1,12 @@
 class Admin::LeadScoringController < Admin::ApplicationController
   before_filter :require_user
-  before_filter "set_current_tab('admin/lead_scoring')", :only => [ :index ]
+  before_filter "set_current_tab('admin/lead_scoring')", :only => [ :index, :update ]
 
   # GET /admin/lead_scoring
   #----------------------------------------------------------------------------
   def index
     @lead_scoring_rules = LeadScoringRule.all
-    @lead_scoring_rules = [LeadScoringRule.new(:points => 0)] if @lead_scoring_rules.empty?
+    @lead_scoring_rules << LeadScoringRule.new if @lead_scoring_rules.empty?
 
     respond_to do |format|
       format.html # index.html.haml
@@ -22,7 +22,6 @@ class Admin::LeadScoringController < Admin::ApplicationController
     @lead_scoring_rules = []
     params[:lead_scoring_rules].each do |index, data|
       if data["id"].blank?
-
         @lead_scoring_rules << LeadScoringRule.create(data)
       else
         if rule = LeadScoringRule.find_by_id(data["id"])

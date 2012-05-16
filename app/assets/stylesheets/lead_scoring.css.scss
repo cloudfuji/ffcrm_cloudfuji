@@ -1,6 +1,45 @@
-li.lead_scoring_rule .field_with_errors {
-  display: inline;
-  input {
-    background-color: #ffdddd;
+li.lead_scoring_rule {
+  font-size: 13px;
+
+  &:last-child {
+    border-bottom: none;
   }
+
+  input {
+    font-size: 13px;
+    margin: 0 4px;
+    width: 150px;
+    vertical-align: middle;
+    margin-bottom: 3px;
+  }
+  input[type=checkbox] {
+    width: 14px;
+    margin-left: 2px;
+  }
+
+  .field_with_errors {
+    display: inline;
+    input {
+      background-color: #ffdddd;
+    }
+  }
+}
+
+ul#lead_scoring_rules {
+  a.remove_lead_scoring_rule {
+    margin-right: 6px;
+    img {
+      vertical-align: middle;
+      margin-bottom: 4px;
+    }
+  }
+}
+
+.buttonbar.lead_scoring_buttons {
+  width: 796px;
+  float: left;
+  font-size: 13px;
+  input[type='submit'], button { font-size: 14px; }
+  .save_or_cancel { float: right; }
+  button { float: left; }
 }
