@@ -4,10 +4,12 @@ module FatFreeCRM
       config.to_prepare do
         # Add Lead Scoring tab
         begin
-          FatFreeCRM::Tabs.admin << {
+          unless FatFreeCRM::Tabs.admin.any? {|t| t[:text] == "Lead Scoring" }
+            FatFreeCRM::Tabs.admin << {
             :text => "Lead Scoring",
             :url => { :controller => "admin/lead_scoring" }
           }
+          end
         rescue TypeError
           puts "You must migrate your settings table."
         end
