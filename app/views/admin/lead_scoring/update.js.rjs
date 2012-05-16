@@ -1,0 +1,18 @@
+invalid_rules = @lead_scoring_rules.reject(&:valid?)
+if invalid_rules.any?
+  error_html = "There were (#{invalid_rules.size}) invalid rows:<br>"
+  invalid_rules.each_with_index do |rule, i|
+    error_html << "<strong>#{i+1})</strong>"
+    error_html << "<ul style='margin-left: 20px;'>"
+    rule.errors.full_messages.each do |message|
+      error_html << "<li>#{message}</li>"
+    end
+    error_html << "</ul>"
+  end
+  page[:flash].replace_html error_html.html_safe
+  page.call "crm.flash", :error
+else
+  page[:flash].replace_html "All rules were saved successfully.".html_safe
+  page.call "crm.flash", :notice
+  flash[:notice] = nil
+end

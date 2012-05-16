@@ -1,0 +1,9 @@
+- invalid_rules = @lead_scoring_rules.select{|r| r.errors.any? }
+- if invalid_rules.any?
+  There were (#{invalid_rules.size}) invalid rows:
+  %br
+  - invalid_rules.each_with_index do |rule, i|
+    %strong= (i + 1).to_s << ")"
+    %ul(style='margin-left: 20px;')
+      - rule.errors.full_messages.each do |message|
+        %li= message

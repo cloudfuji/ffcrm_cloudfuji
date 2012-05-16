@@ -1,0 +1,13 @@
+.title
+  Lead Scoring
+
+.list
+  = form_for :lead_scoring_rules do |f|
+    %ul#lead_scoring_rules
+      - @lead_scoring_rules.each_with_index do |rule, i|
+        = f.fields_for i.to_s, rule do |r|
+          = render "form", :r => r, :index => i
+
+    .buttonbar
+      = add_lead_scoring_rule_button(f)
+      = submit_tag 'Save', :name => :save
