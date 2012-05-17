@@ -23,7 +23,7 @@ module FatFreeCRM
                     lead.update_attribute :score, lead.score + rule.points
                   end
                   # Add history event to lead, to record change of score
-                  lead.versions.create! :event => "Event '#{event_name}' - Score changed by #{rule.points} points, new score: #{lead.score}"
+                  lead.versions.create! :event => "Rule for '#{event_name}': Score changed by #{rule.points} points. (New total: #{lead.score})"
                   # Increment and save count of rule/lead applications
                   count.count += 1
                   count.save
