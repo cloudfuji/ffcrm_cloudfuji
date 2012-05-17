@@ -29,7 +29,7 @@ describe LeadScoringObserver do
 
     @observer.catch_all
     @lead.reload
-    @lead.versions.last.event.should include("Event 'customer_had_tea' - Score changed by 20 points")
+    @lead.versions.last.event.should include("Rule for 'customer_had_tea': Score changed by 20 points")
     @lead.score.should == 20
     find_rule_count(@lead, @rule).count.should == 1
 
@@ -74,7 +74,7 @@ describe LeadScoringObserver do
 
     @observer.catch_all
     @lead.reload
-    @lead.versions.last.event.should include("Event 'customer_had_tea' - Score changed by -10 points")
+    @lead.versions.last.event.should include("Rule for 'customer_had_tea': Score changed by -10 points")
     @lead.score.should == -10
     find_rule_count(@lead, @rule).count.should == 1
 
