@@ -9,7 +9,7 @@ describe LeadScoringObserver do
       'event' => 'customer_had_tea',
       "data" => {
         "email" => "test_lead@example.com",
-        "human" => "Customer drank some tea (jasmine), test_lead@example.com"
+        "type_of_tea" => "Jasmine"
       }
     }
   end
@@ -28,7 +28,7 @@ describe LeadScoringObserver do
 
     @observer.catch_all
     @lead.reload
-    @lead.versions.last.event.should include("Score changed by 20 points")
+    @lead.versions.last.event.should include("Event 'customer_had_tea' - Score changed by 20 points")
     @lead.score.should == 20
     find_rule_count(@lead, @rule).count.should == 1
 
@@ -37,6 +37,29 @@ describe LeadScoringObserver do
     @lead.reload
     @lead.score.should == 40
     find_rule_count(@lead, @rule).count.should == 2
+  end
+
+  it "should increment a lead's score only when matching data is present" do
+    user = FactoryGirl.create(:user, :ido_id => "1234")
+    @lead = FactoryGirl.create(:lead, :email => 'test_lead@example.com', :user => user, :campaign => nil)
+
+    @rule = FactoryGirl.create :lead_scoring_rule,
+                               :event  => "customer_had_tea",
+                               :points => 15,
+                               :match  => "Russian Earl Grey"
+
+    @observer.catch_all
+    @lead.reload
+    @lead.score.should == 0
+    # No LeadScoringRuleCount should be created yet
+    find_rule_count(@lead, @rule).should == nil
+
+    @observer.params['data']['type_of_tea'] = "Russian Earl Grey"
+    @observer.catch_all
+
+    @lead.reload
+    @lead.score.should == 15
+    find_rule_count(@lead, @rule).count.should == 1
   end
 
   it "should not decrement a lead's score twice if the rule should only be applied once" do
@@ -50,7 +73,7 @@ describe LeadScoringObserver do
 
     @observer.catch_all
     @lead.reload
-    @lead.versions.last.event.should include("Score changed by -10 points")
+    @lead.versions.last.event.should include("Event 'customer_had_tea' - Score changed by -10 points")
     @lead.score.should == -10
     find_rule_count(@lead, @rule).count.should == 1
 

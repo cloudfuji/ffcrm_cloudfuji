@@ -11,14 +11,17 @@ module FatFreeCRM
               count = LeadScoringRuleCount.find_by_lead_id_and_lead_scoring_rule_id(lead, rule) ||
                       LeadScoringRuleCount.new(:lead => lead, :lead_scoring_rule => rule)
 
-              # Don't apply this rule again if it should only be applied once
+              # Don't apply this rule more than once if :once flag is set
               unless rule.once && count.count > 0
-                lead.update_attribute :score, lead.score + rule.points
-                # Add history event to lead to display score change
-                lead.versions.create! :event => "Score changed by #{rule.points} points, new score: #{lead.score}"
-                # Increment and save count of rule/lead applications
-                count.count += 1
-                count.save
+                # If :match is present, only apply the rule if data matches string
+                if rule.match.blank? || params['data'].inspect.include?(rule.match)
+                  lead.update_attribute :score, lead.score + rule.points
+                  # Add history event to lead, to record change of score
+                  lead.versions.create! :event => "Event '#{params['event']}' - Score changed by #{rule.points} points, new score: #{lead.score}"
+                  # Increment and save count of rule/lead applications
+                  count.count += 1
+                  count.save
+                end
               end
             end
           end
