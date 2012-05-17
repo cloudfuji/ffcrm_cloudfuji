@@ -19,7 +19,9 @@ module FatFreeCRM
               unless rule.once && count.count > 0
                 # If :match is present, only apply the rule if data matches string
                 if rule.match.blank? || params['data'].inspect.include?(rule.match)
-                  lead.update_attribute :score, lead.score + rule.points
+                  lead.without_versioning do
+                    lead.update_attribute :score, lead.score + rule.points
+                  end
                   # Add history event to lead, to record change of score
                   lead.versions.create! :event => "Event '#{event_name}' - Score changed by #{rule.points} points, new score: #{lead.score}"
                   # Increment and save count of rule/lead applications
