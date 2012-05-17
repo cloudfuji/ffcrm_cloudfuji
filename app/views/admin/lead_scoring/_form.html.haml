@@ -1,0 +1,14 @@
+%li.lead_scoring_rule{"data-index" => index}
+  = link_to image_tag('delete.png', :size => '16x16', :alt => 'Remove Rule'), nil, :class => "remove_lead_scoring_rule"
+
+  = r.hidden_field(:id) unless r.object.new_record?
+
+  If event:
+  = r.text_field :event, :class => "lead_scoring_event"
+  matches:
+  = r.text_field :match, :class => "lead_scoring_match"
+  change score by
+  = r.text_field :points, :class => "lead_scoring_points"
+  points.
+  Only once per lead:
+  = r.check_box :once, :class => "lead_scoring_once"

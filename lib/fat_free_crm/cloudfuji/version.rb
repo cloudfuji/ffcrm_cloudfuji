@@ -1,5 +1,0 @@
-module FatFreeCRM
-  module Cloudfuji
-    VERSION = '0.1.7'
-  end
-end

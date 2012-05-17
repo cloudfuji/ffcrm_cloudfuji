@@ -1,6 +1,6 @@
 # -*- encoding: utf-8 -*-
 $:.push File.expand_path('../lib', __FILE__)
-require 'fat_free_crm/cloudfuji/version'
+require 'ffcrm_cloudfuji/version'
 
 Gem::Specification.new do |s|
   s.name = 'ffcrm_cloudfuji'
@@ -16,7 +16,7 @@ Gem::Specification.new do |s|
   s.add_development_dependency 'capybara'
   s.add_development_dependency 'combustion'
 
-  s.add_dependency 'cloudfuji',           '>= 0.0.41'
+  s.add_dependency 'cloudfuji',           '>= 0.0.42'
   s.add_dependency 'authlogic_cloudfuji', '~> 0.9'
 
 end

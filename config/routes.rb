@@ -1,14 +1,23 @@
-# Remove existing authentication routes
-r = Rails.application.routes
-r.set.routes.reject! {|r| %w(login logout).include? r.name }
-r.set.send "clear_cache!"
-
-begin
-  Rails.application.routes.draw do
+Rails.application.routes.draw do
+  begin
     cloudfuji_routes
-    cloudfuji_authentication_routes if Cloudfuji::Platform.on_cloudfuji?
+
+    if Cloudfuji::Platform.on_cloudfuji?
+      # Remove existing authentication routes
+      r = Rails.application.routes
+      r.set.routes.reject! {|r| %w(login logout).include? r.name }
+      r.set.send "clear_cache!"
+      # Setup cloudfuji authentication routes
+      cloudfuji_authentication_routes
+    end
+  rescue => e
+    puts "Error loading the Cloudfuji routes:"
+    puts "#{e.inspect}"
   end
-rescue => e
-  puts "Error loading the Cloudfuji routes:"
-  puts "#{e.inspect}"
+
+  namespace :admin do
+    resources :lead_scoring, :only => :index do
+      post :update, :on => :collection
+    end
+  end
 end

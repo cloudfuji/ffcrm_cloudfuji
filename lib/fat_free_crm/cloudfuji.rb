@@ -4,11 +4,12 @@ module FatFreeCRM
       def enable_cloudfuji!
         load_observers!
         extend_user!
+        extend_lead!
         setup_authentication!
       end
 
       def extend_user!
-        puts "Extending the user model"
+        puts "Extending the User model"
         User.instance_eval do
           include ::Cloudfuji::UserHelper
 
@@ -30,6 +31,13 @@ module FatFreeCRM
             self.email        = extra_attributes["email"]
             self.username   ||= extra_attributes["email"].split("@").first
           end
+        end
+      end
+
+      def extend_lead!
+        puts "Extending the Lead model"
+        Lead.instance_eval do
+          has_many :lead_scoring_rule_counts
         end
       end
 

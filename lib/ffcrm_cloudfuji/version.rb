@@ -1,6 +1,5 @@
 module FatFreeCRM
   module Cloudfuji
-    class Engine < Rails::Engine
-    end
+    VERSION = '0.2.0'
   end
 end

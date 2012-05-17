@@ -1,0 +1,47 @@
+li.lead_scoring_rule {
+  font-size: 13px;
+
+  &:last-child {
+    border-bottom: none;
+  }
+
+  input {
+    font-size: 13px;
+    margin: 0 4px;
+    vertical-align: middle;
+    margin-bottom: 3px;
+  }
+  .lead_scoring_event { width: 160px; }
+  .lead_scoring_once {
+    width: 14px;
+    margin-left: 2px;
+  }
+  .lead_scoring_match { width: 190px; }
+  .lead_scoring_points { width: 35px; }
+
+  .field_with_errors {
+    display: inline;
+    input {
+      background-color: #ffdddd;
+    }
+  }
+}
+
+ul#lead_scoring_rules {
+  a.remove_lead_scoring_rule {
+    margin-right: 6px;
+    img {
+      vertical-align: middle;
+      margin-bottom: 4px;
+    }
+  }
+}
+
+.buttonbar.lead_scoring_buttons {
+  width: 845px;
+  float: left;
+  font-size: 13px;
+  input[type='submit'], button { font-size: 14px; }
+  .save_or_cancel { float: right; }
+  button { float: left; }
+}
