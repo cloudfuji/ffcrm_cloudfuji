@@ -6,7 +6,8 @@ describe LeadScoringObserver do
   before do
     @observer = LeadScoringObserver.new
     @observer.params = {
-      'event' => 'customer_had_tea',
+      'category' => 'customer',
+      'event'    => 'had_tea',
       "data" => {
         "email" => "test_lead@example.com",
         "type_of_tea" => "Jasmine"
