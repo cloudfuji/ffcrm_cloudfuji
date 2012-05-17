@@ -4,11 +4,11 @@
   = r.hidden_field(:id) unless r.object.new_record?
 
   If event:
-  = r.text_field :event
+  = r.text_field :event, :class => "lead_scoring_event"
   matches:
-  = r.text_field :match
+  = r.text_field :match, :class => "lead_scoring_match"
   change score by
-  = r.text_field :points, :style => "width: 35px;"
+  = r.text_field :points, :class => "lead_scoring_points"
   points.
   Only once per lead:
-  = r.check_box :once
+  = r.check_box :once, :class => "lead_scoring_once"

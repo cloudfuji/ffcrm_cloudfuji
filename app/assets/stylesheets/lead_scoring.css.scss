@@ -8,14 +8,16 @@ li.lead_scoring_rule {
   input {
     font-size: 13px;
     margin: 0 4px;
-    width: 150px;
     vertical-align: middle;
     margin-bottom: 3px;
   }
-  input[type=checkbox] {
+  .lead_scoring_event { width: 160px; }
+  .lead_scoring_once {
     width: 14px;
     margin-left: 2px;
   }
+  .lead_scoring_match { width: 190px; }
+  .lead_scoring_points { width: 35px; }
 
   .field_with_errors {
     display: inline;
@@ -36,7 +38,7 @@ ul#lead_scoring_rules {
 }
 
 .buttonbar.lead_scoring_buttons {
-  width: 796px;
+  width: 845px;
   float: left;
   font-size: 13px;
   input[type='submit'], button { font-size: 14px; }
