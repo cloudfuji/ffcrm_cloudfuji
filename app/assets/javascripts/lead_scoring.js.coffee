@@ -6,8 +6,8 @@
       new_id = new Date().getTime()
       regexp = new RegExp('new_lead_scoring_rule', 'g')
       $('ul#lead_scoring_rules').append(content.replace(regexp, new_id))
-      # Setup event autocomplete
-      $('input#lead_scoring_rules_'+new_id+'_event').autocomplete({source: observed_cloudfuji_events})
+      # Setup event autocomplete for new field
+      this.event_autocomplete('input#lead_scoring_rules_'+new_id+'_event')
 
     remove_fields: (button) ->
       container = $(button).closest('li.lead_scoring_rule')
@@ -20,8 +20,11 @@
         container.hide()
         container.append($('<input type="text" name="lead_scoring_rules['+index+'][_destroy]" value="yes">'))
 
-    event_autocomplete: ->
-      $('input.lead_scoring_event').autocomplete({source: observed_cloudfuji_events})
+    event_autocomplete: (selector = 'input.lead_scoring_event') ->
+      $(selector).autocomplete({source: observed_cloudfuji_events, minLength: 0})
+      # Show all events on focus, if input is empty
+      $(selector).focus ->
+        $(this).autocomplete "search", "" if $(this).val() == ""
 
   $(document).ready ->
     lead_scoring = new LeadScoring()
