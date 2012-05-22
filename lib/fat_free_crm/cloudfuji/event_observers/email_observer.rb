@@ -85,7 +85,7 @@ module FatFreeCRM
           lead.email = recipient
           lead.first_name = recipient.split("@").first if lead.first_name.blank?
           lead.last_name  = recipient.split("@").last  if lead.last_name.blank?
-          lead.user       = User.first if lead.user_id.nil?
+          lead.user       ||= User.first
 
           puts "About to save:"
           puts lead.inspect

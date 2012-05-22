@@ -48,7 +48,7 @@ module FatFreeCRM
           lead.email      = data['email']
           lead.first_name = data['first_name'] || data['email'].split("@").first if lead.first_name.blank?
           lead.last_name  = data['last_name']  || data['email'].split("@").last  if lead.last_name.blank?
-
+          lead.user       ||= User.first
           lead.save!
 
           lead
