@@ -3,20 +3,21 @@ module FatFreeCRM
     module EventObservers
       class UserObserver < ::Cloudfuji::EventObserver
         def user_added
+          data = params['data']
+          ido_id = data['ido_id'].to_s
+
           puts "Adding a new user with incoming data #{params.inspect}"
           puts "Authlogic username column: #{::Authlogic::Cas.cas_username_column}="
-          puts "Setting username to: #{params['data'].try(:[], 'ido_id')}"
+          puts "Setting username to: #{ido_id}"
 
-          data = params['data']
-
-          user = User.unscoped.find_or_create_by_ido_id(data['ido_id'])
+          user = User.unscoped.find_or_create_by_ido_id(ido_id)
 
           user.email      = data['email']
           user.first_name = user.email.split('@').first
           user.last_name  = user.email.split('@').last
           user.username   = data['email']
           user.deleted_at = nil
-          user.send("#{::Authlogic::Cas.cas_username_column}=".to_sym, data.try(:[], 'ido_id'))
+          user.send("#{::Authlogic::Cas.cas_username_column}=".to_sym, ido_id)
 
           puts user.inspect
 
