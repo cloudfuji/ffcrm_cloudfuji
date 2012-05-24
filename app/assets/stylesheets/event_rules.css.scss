@@ -1,4 +1,4 @@
-li.lead_scoring_rule {
+li.event_rule {
   font-size: 13px;
 
   &:last-child {
@@ -11,13 +11,13 @@ li.lead_scoring_rule {
     vertical-align: middle;
     margin-bottom: 3px;
   }
-  .lead_scoring_event { width: 160px; }
-  .lead_scoring_once {
+  .event_rules_event { width: 160px; }
+  .event_rules_once {
     width: 14px;
     margin-left: 2px;
   }
-  .lead_scoring_match { width: 190px; }
-  .lead_scoring_points { width: 35px; }
+  .event_rules_match { width: 190px; }
+  .event_rules_points { width: 35px; }
 
   .field_with_errors {
     display: inline;
@@ -27,8 +27,8 @@ li.lead_scoring_rule {
   }
 }
 
-ul#lead_scoring_rules {
-  a.remove_lead_scoring_rule {
+ul#event_rules {
+  a.remove_event_rule {
     margin-right: 6px;
     img {
       vertical-align: middle;
@@ -37,7 +37,7 @@ ul#lead_scoring_rules {
   }
 }
 
-.buttonbar.lead_scoring_buttons {
+.buttonbar.event_rules_buttons {
   width: 845px;
   float: left;
   font-size: 13px;

@@ -1,0 +1,14 @@
+%li.event_rule{"data-index" => index}
+  = link_to image_tag('delete.png', :size => '16x16', :alt => 'Remove Rule'), nil, :class => "remove_event_rule"
+
+  = r.hidden_field(:id) unless r.object.new_record?
+
+  If event:
+  = r.text_field :event, :class => "event_rules_event"
+  matches:
+  = r.text_field :match, :class => "event_rules_match"
+  change score by
+  = r.text_field :points, :class => "event_rules_points"
+  points.
+  Only once per lead:
+  = r.check_box :once, :class => "event_rules_once"

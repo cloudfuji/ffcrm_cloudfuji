@@ -227,13 +227,13 @@ ActiveRecord::Schema.define(:version => 20120515194445) do
   add_index "fields", ["field_group_id"], :name => "index_fields_on_field_group_id"
   add_index "fields", ["name"], :name => "index_fields_on_name"
 
-  create_table "lead_scoring_rule_counts", :force => true do |t|
+  create_table "lead_event_rule_counts", :force => true do |t|
     t.integer "lead_id"
-    t.integer "lead_scoring_rule_id"
+    t.integer "event_rule_id"
     t.integer "count",                :default => 0
   end
 
-  create_table "lead_scoring_rules", :force => true do |t|
+  create_table "event_rules", :force => true do |t|
     t.string   "event"
     t.string   "match"
     t.integer  "points",     :default => 0

@@ -1,7 +1,7 @@
 module FatFreeCRM
   module Cloudfuji
     module EventObservers
-      class LeadScoringObserver < ::Cloudfuji::EventObserver
+      class EventRulesObserver < ::Cloudfuji::EventObserver
         # Fire for all events
         def catch_all
           data  = params['data']
@@ -10,10 +10,10 @@ module FatFreeCRM
           if lead = Lead.find_by_email(email)
             event_name = "#{params['category']}_#{params['event']}"
 
-            LeadScoringRule.find_all_by_event(event_name).each do |rule|
+            EventRule.find_all_by_event(event_name).each do |rule|
               # Find how many times this rule has been applied to this Lead
-              count = LeadScoringRuleCount.find_by_lead_id_and_lead_scoring_rule_id(lead, rule) ||
-                      LeadScoringRuleCount.new(:lead => lead, :lead_scoring_rule => rule)
+              count = LeadEventRuleCount.find_by_lead_id_and_event_rule_id(lead, rule) ||
+                      LeadEventRuleCount.new(:lead => lead, :event_rule => rule)
 
               # Don't apply this rule more than once if :once flag is set
               unless rule.once && count.count > 0

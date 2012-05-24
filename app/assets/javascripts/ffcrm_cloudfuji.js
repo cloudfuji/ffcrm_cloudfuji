@@ -1,1 +1,1 @@
-//= require lead_scoring
+//= require event_rules
