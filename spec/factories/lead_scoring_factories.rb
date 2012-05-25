@@ -9,7 +9,7 @@ FactoryGirl.define do
     lead_attribute {  %w(username score first_name last_name).sample }
     
     action { %w(add_tag remove_tag change_lead_score send_notification).sample }
-    action_tag { 'EventTag' }
+    tag { 'EventTag' }
     change_score_by { rand(100) }
   end
 end

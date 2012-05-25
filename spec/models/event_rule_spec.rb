@@ -8,7 +8,7 @@ describe EventRule do
         :event_category  => "cloudfuji_event_received", 
         :cloudfuji_event => "dummy_event",
         :action          => "add_tag",
-        :action_tag      => "EventTag"
+        :tag      => "EventTag"
       )
     end
       
@@ -24,13 +24,13 @@ describe EventRule do
       @event_rule.errors[:lead_attribute].should include("can't be blank")
     end
     
-    it "should be invalid without a action_tag if action is add_tag or remove_tag" do
+    it "should be invalid without a tag if action is add_tag or remove_tag" do
       @event_rule = EventRule.new :action  => "add_tag"
       @event_rule.should_not be_valid
-      @event_rule.errors[:action_tag].should include("can't be blank")
+      @event_rule.errors[:tag].should include("can't be blank")
       @event_rule.action = "remove_tag"
       @event_rule.should_not be_valid
-      @event_rule.errors[:action_tag].should include("can't be blank")
+      @event_rule.errors[:tag].should include("can't be blank")
     end    
     
     it "should be invalid without change_score_by if action is change_lead_score" do

@@ -68,12 +68,14 @@ class EventRule < ActiveRecord::Base
   
   def add_tag(lead, match_data)
     lead.tag_list << tag
-    lead.save
+    save_lead_without_versioning_or_observers(lead)
+    lead.versions.create! :event => "Rule for #{human_event_label}: Added tag '#{tag}'"
   end
   
   def remove_tag(lead, match_data)
     lead.tag_list -= [tag]
-    lead.save
+    save_lead_without_versioning_or_observers(lead)
+    lead.versions.create! :event => "Rule for #{human_event_label}: Removed tag '#{tag}'"
   end
   
   
@@ -95,8 +97,16 @@ class EventRule < ActiveRecord::Base
   
   def human_event_label
     case event_category
-    when 'cloudfuji_event_received'; "Cloudfuji Event - '#{cloudfuji_event}'"
-    when 'lead_attribute_changed';   "Lead Update - :#{lead_attribute}"
+    when 'cloudfuji_event_received'; "Cloudfuji event - '#{cloudfuji_event}'"
+    when 'lead_attribute_changed';   "Lead update - '#{lead_attribute}'"
+    end
+  end
+  
+  def save_lead_without_versioning_or_observers(lead)
+    Lead.observers.disable :cloudfuji_lead_observer do
+      lead.without_versioning do
+        lead.save
+      end
     end
   end
 end

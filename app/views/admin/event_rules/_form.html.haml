@@ -33,6 +33,7 @@
   = action_fields_for(r.object, %w(add_tag remove_tag)) do
     = r.text_field :tag, :class => "tag_input"
 
-  %small
-    (Limit per lead:
-    = r.text_field(:limit_per_lead, :class => "numeric_input") << h(")")
+  = action_fields_for(r.object, %w(change_lead_score send_notification)) do
+    %small
+      (Limit per lead:
+      = r.text_field(:limit_per_lead, :class => "numeric_input") << h(")")
