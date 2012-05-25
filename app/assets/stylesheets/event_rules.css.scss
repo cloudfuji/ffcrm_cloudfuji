@@ -1,33 +1,39 @@
-li.event_rule {
-  font-size: 13px;
+ul#event_rules {
+  div { display: inline; }
 
-  &:last-child {
-    border-bottom: none;
-  }
-
-  input {
+  li.event_rule {
     font-size: 13px;
-    margin: 0 4px;
-    vertical-align: middle;
-    margin-bottom: 3px;
-  }
-  .event_rules_event { width: 160px; }
-  .event_rules_once {
-    width: 14px;
-    margin-left: 2px;
-  }
-  .event_rules_match { width: 190px; }
-  .event_rules_points { width: 35px; }
 
-  .field_with_errors {
-    display: inline;
+    &:last-child {
+      border-bottom: none;
+    }
+
     input {
-      background-color: #ffdddd;
+      font-size: 13px;
+      margin: 0 4px;
+      vertical-align: middle;
+      margin-bottom: 3px;
+    }
+    .cloudfuji_event { width: 120px; }
+    .match_input { width: 140px; }
+    .numeric_input { width: 35px; }
+    .tag_input { width: 100px; }
+    input[type='checkbox'] {
+      width: 14px;
+      margin-left: 2px;
+    }
+
+    .field_with_errors {
+      display: inline;
+      input, select {
+        background-color: #ffdddd;
+      }
+      select {
+        border: 2px solid #ff9999;
+      }
     }
   }
-}
 
-ul#event_rules {
   a.remove_event_rule {
     margin-right: 6px;
     img {
