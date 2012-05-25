@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120524031157) do
+ActiveRecord::Schema.define(:version => 20120525151511) do
 
   create_table "account_contacts", :force => true do |t|
     t.integer  "account_id"
@@ -276,6 +276,7 @@ ActiveRecord::Schema.define(:version => 20120524031157) do
     t.string   "skype",            :limit => 128
     t.text     "subscribed_users"
     t.integer  "score",                           :default => 0
+    t.text     "ido_id"
   end
 
   add_index "leads", ["assigned_to"], :name => "index_leads_on_assigned_to"

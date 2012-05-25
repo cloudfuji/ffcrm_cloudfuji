@@ -6,8 +6,9 @@ module FatFreeCRM
         def catch_all
           data  = params['data']
           email = data['email'] || data['recipient']
-          # Look up Lead by email address
-          if lead = Lead.find_by_email(email)
+          # Look up Lead by ido_id, fall back to email address
+          lead = Lead.find_by_ido_id(data['customer_ido_id'])
+          if lead ||= Lead.find_by_email(email)
             event_name = "#{params['category']}_#{params['event']}"
 
             EventRule.find_all_by_event_category_and_cloudfuji_event('cloudfuji_event_received', event_name).each do |rule|
