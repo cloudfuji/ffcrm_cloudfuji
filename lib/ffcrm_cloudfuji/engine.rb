@@ -7,7 +7,6 @@ module FatFreeCRM
       end
     
       config.to_prepare do
-        
         require 'fat_free_crm/cloudfuji/view_hooks'
 
         # Add Event Rules tab

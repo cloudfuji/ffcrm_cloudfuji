@@ -47,15 +47,16 @@ class EventRule < ActiveRecord::Base
   
   private
   def event_matches?(match_data)
-    match_string = case event_category
-    when 'cloudfuji_event_received'; match_data.inspect  # Data hash => string
-    when 'lead_attribute_changed';   match_data[1]       # New value
-    end
-    match_string.downcase! if case_insensitive_matching
     test_string = case_insensitive_matching ? match.downcase : match
     case event_category
-    when 'cloudfuji_event_received'; match_string.include?(test_string)  # Includes match 
-    when 'lead_attribute_changed';   match_string == test_string         # Equals match
+    when 'cloudfuji_event_received'
+      match_string = match_data.inspect
+      match_string.downcase! if case_insensitive_matching
+      match_string.include?(test_string) 
+    when 'lead_attribute_changed'
+      match_string = match_data[1]
+      match_string.downcase! if case_insensitive_matching
+      match_string == test_string
     end
   end
   
