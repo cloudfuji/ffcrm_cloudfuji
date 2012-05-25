@@ -16,7 +16,7 @@ Rails.application.routes.draw do
   end
 
   namespace :admin do
-    resources :lead_scoring, :only => :index do
+    resources :event_rules, :only => :index do
       post :update, :on => :collection
     end
   end

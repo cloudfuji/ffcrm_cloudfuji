@@ -42,10 +42,12 @@ module FatFreeCRM
             return result if result
           end
 
-          lead = Lead.find_by_email(data['email']) || Lead.new
+          lead   = Lead.find_by_ido_id(data['customer_ido_id'])
+          lead ||= Lead.find_by_email(data['email'])
           lead ||= Lead.new
 
           lead.email      = data['email']
+          lead.ido_id     = data['customer_ido_id']
           lead.first_name = data['first_name'] || data['email'].split("@").first if lead.first_name.blank?
           lead.last_name  = data['last_name']  || data['email'].split("@").last  if lead.last_name.blank?
           lead.user       ||= User.first

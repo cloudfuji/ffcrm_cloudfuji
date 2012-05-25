@@ -2,18 +2,18 @@
   var observed_cloudfuji_events = #{Cloudfuji::Data.observed_events.map(&:to_s).inspect};
 
 .title
-  Lead Scoring
+  Event Rules
 
 .list
-  = form_for :lead_scoring_rules do |f|
-    %ul#lead_scoring_rules
-      - @lead_scoring_rules.each_with_index do |rule, i|
+  = form_for :event_rules do |f|
+    %ul#event_rules
+      - @event_rules.each_with_index do |rule, i|
         = f.fields_for i.to_s, rule do |r|
           = render "form", :r => r, :index => i
 
-    .buttonbar.lead_scoring_buttons
-      = add_lead_scoring_rule_button(f)
+    .buttonbar.event_rules_buttons
+      = add_event_rule_button(f)
       .save_or_cancel
         = submit_tag 'Save', :name => :save
         #{t :or}
-        = link_to "Cancel", admin_lead_scoring_index_path
+        = link_to "Cancel", admin_event_rules_path

@@ -1,9 +1,15 @@
 FactoryGirl.define do
-  factory :lead_scoring_rule do
-    event {
+  factory :event_rule do
+    event_category { %w(cloudfuji_event_received lead_attribute_changed).sample }
+
+    cloudfuji_event {
       %w(customer email app user).sample << "_" <<
       %w(partied danced backflipped moonwalked).sample
     }
-    points { rand(100) }
+    lead_attribute {  %w(username score first_name last_name).sample }
+    
+    action { %w(add_tag remove_tag change_lead_score send_notification).sample }
+    tag { 'EventTag' }
+    change_score_by { rand(100) }
   end
 end

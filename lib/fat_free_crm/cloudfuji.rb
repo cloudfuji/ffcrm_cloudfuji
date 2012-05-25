@@ -37,7 +37,7 @@ module FatFreeCRM
       def extend_lead!
         puts "Extending the Lead model"
         Lead.instance_eval do
-          has_many :lead_scoring_rule_counts
+          has_many :lead_event_rule_counts
         end
       end
 

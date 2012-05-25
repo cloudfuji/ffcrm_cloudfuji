@@ -1,0 +1,5 @@
+"en-US":
+  activerecord:
+    attributes:
+      event_rule:
+        change_score_by: "Points"

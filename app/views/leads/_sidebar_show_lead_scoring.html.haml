@@ -1,8 +1,8 @@
-.caption Lead Scoring
+.caption Event Rules
 %li
   %dt= lead.score
   %tt Score:
-- if lead.respond_to?(:lead_scoring_rule_counts) && lead.lead_scoring_rule_counts.any?
+- if lead.respond_to?(:lead_event_rule_counts) && lead.lead_event_rule_counts.any?
   %li
-    %dt= lead.lead_scoring_rule_counts.sum {|c| c.count }
+    %dt= lead.lead_event_rule_counts.sum {|c| c.count }
     %tt Total scoring events:
