@@ -12,11 +12,9 @@ class ExtendLeadScoringAsEventRules < ActiveRecord::Migration
 
     # Columns for cloudfuji event matching
     rename_column :event_rules, :event, :cloudfuji_event
-    rename_column :event_rules, :match, :cloudfuji_data_contains
 
     # Columns for lead column changes
     add_column    :event_rules, :lead_attribute, :string
-    add_column    :event_rules, :lead_attribute_matches, :string
 
     # Columns for actions
     add_column    :event_rules, :action, :string, :default => 'change_lead_score'

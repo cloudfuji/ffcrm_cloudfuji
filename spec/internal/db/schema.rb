@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120515194445) do
+ActiveRecord::Schema.define(:version => 20120524031157) do
 
   create_table "account_contacts", :force => true do |t|
     t.integer  "account_id"
@@ -196,6 +196,20 @@ ActiveRecord::Schema.define(:version => 20120515194445) do
 
   add_index "emails", ["mediator_id", "mediator_type"], :name => "index_emails_on_mediator_id_and_mediator_type"
 
+  create_table "event_rules", :force => true do |t|
+    t.string   "cloudfuji_event"
+    t.string   "match"
+    t.integer  "change_score_by",           :default => 0
+    t.datetime "created_at",                                                        :null => false
+    t.datetime "updated_at",                                                        :null => false
+    t.string   "event_category",            :default => "cloudfuji_event_received"
+    t.string   "lead_attribute"
+    t.string   "action",                    :default => "change_lead_score"
+    t.string   "action_tag"
+    t.integer  "limit_per_lead"
+    t.boolean  "case_insensitive_matching"
+  end
+
   create_table "field_groups", :force => true do |t|
     t.string   "name",       :limit => 64
     t.string   "label",      :limit => 128
@@ -230,16 +244,7 @@ ActiveRecord::Schema.define(:version => 20120515194445) do
   create_table "lead_event_rule_counts", :force => true do |t|
     t.integer "lead_id"
     t.integer "event_rule_id"
-    t.integer "count",                :default => 0
-  end
-
-  create_table "event_rules", :force => true do |t|
-    t.string   "event"
-    t.string   "match"
-    t.integer  "points",     :default => 0
-    t.boolean  "once"
-    t.datetime "created_at",                :null => false
-    t.datetime "updated_at",                :null => false
+    t.integer "count",         :default => 0
   end
 
   create_table "leads", :force => true do |t|
