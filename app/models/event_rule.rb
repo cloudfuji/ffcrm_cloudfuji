@@ -13,4 +13,43 @@ class EventRule < ActiveRecord::Base
   validates_numericality_of :limit_per_lead,  :only_integer => true, :allow_blank => true
 
   has_many :lead_event_rule_counts
+  
+  def process(lead, matching_data)
+    # How many times this rule has been applied to a given Lead
+    count = LeadEventRuleCount.find_by_lead_id_and_event_rule_id(lead, self) ||
+            LeadEventRuleCount.new(:lead => lead, :event_rule => self)
+    # Don't apply this rule more than limit_per_lead, if set
+    unless limit_per_lead.present? && count.count > limit_per_lead
+      # If :match is present, only apply the rule if data matches string
+      if match.blank? || matching_data.include?(match)
+        # Run the action method if defined
+        if respond_to?(action)
+          send(action, lead)
+          # Increment and save count of rule/lead applications
+          count.count += 1
+          count.save
+        else
+          raise "Do not know how to process '#{action}' action."
+        end
+      end
+    end
+  end
+  
+  # Actions
+  # -----------------------------------------------------------------
+  def change_lead_score(lead)
+    lead.without_versioning do
+      lead.update_attribute :score, lead.score + change_score_by
+    end
+    # Add history event to lead, to record change of score
+    lead.versions.create! :event => "Rule for #{human_event_label}: Score changed by #{change_score_by} points. (New total: #{lead.score})"
+  end
+  
+  private
+  def human_event_label
+    case event_category
+    when 'cloudfuji_event_received'; "Cloudfuji Event - '#{cloudfuji_event}'"
+    when 'lead_attribute_changed';   "Lead Update - :#{lead_attribute}"
+    end
+  end
 end
