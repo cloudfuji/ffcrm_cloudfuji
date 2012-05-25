@@ -2,5 +2,4 @@
   activerecord:
     attributes:
       event_rule:
-        action_tag: "Tag name"
         change_score_by: "Points"

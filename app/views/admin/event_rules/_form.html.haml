@@ -31,7 +31,7 @@
 
   -# Add/Remove tag actions share the same field
   = action_fields_for(r.object, %w(add_tag remove_tag)) do
-    = r.text_field :action_tag, :class => "tag_input"
+    = r.text_field :tag, :class => "tag_input"
 
   %small
     (Limit per lead:

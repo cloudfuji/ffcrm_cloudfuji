@@ -18,7 +18,7 @@ class ExtendLeadScoringAsEventRules < ActiveRecord::Migration
 
     # Columns for actions
     add_column    :event_rules, :action, :string, :default => 'change_lead_score'
-    add_column    :event_rules, :action_tag, :string
+    add_column    :event_rules, :tag, :string
     rename_column :event_rules, :points, :change_score_by
 
     remove_column :event_rules, :once

@@ -205,7 +205,7 @@ ActiveRecord::Schema.define(:version => 20120524031157) do
     t.string   "event_category",            :default => "cloudfuji_event_received"
     t.string   "lead_attribute"
     t.string   "action",                    :default => "change_lead_score"
-    t.string   "action_tag"
+    t.string   "tag"
     t.integer  "limit_per_lead"
     t.boolean  "case_insensitive_matching"
   end
