@@ -34,7 +34,7 @@ describe EventRulesObserver do
 
         @observer.catch_all
         @lead.reload
-        @lead.versions.last.event.should include("Rule for Cloudfuji Event - 'customer_had_tea': Score changed by 20 points")
+        @lead.versions.last.event.should include("Rule for Cloudfuji event - 'customer_had_tea': Score changed by 20 points")
         @lead.score.should == 20
         find_rule_count(@lead, @rule).count.should == 1
 
@@ -87,7 +87,7 @@ describe EventRulesObserver do
           @observer.catch_all
           @lead.reload
           
-          @lead.versions.last.event.should == "Rule for Cloudfuji Event - 'customer_had_tea': Score changed by -10 points. (New total: #{test_score})"
+          @lead.versions.last.event.should == "Rule for Cloudfuji event - 'customer_had_tea': Score changed by -10 points. (New total: #{test_score})"
           @lead.score.should == test_score
           find_rule_count(@lead, @rule).count.should == i + 1
         end
