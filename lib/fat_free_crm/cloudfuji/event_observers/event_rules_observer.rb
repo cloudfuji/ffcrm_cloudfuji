@@ -11,7 +11,7 @@ module FatFreeCRM
             event_name = "#{params['category']}_#{params['event']}"
 
             EventRule.find_all_by_event_category_and_cloudfuji_event('cloudfuji_event_received', event_name).each do |rule|
-              rule.process(lead, params['data'].inspect)
+              rule.process(lead, params['data'])
             end
           end
         end

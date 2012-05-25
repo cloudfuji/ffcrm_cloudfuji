@@ -14,14 +14,14 @@ class EventRule < ActiveRecord::Base
 
   has_many :lead_event_rule_counts
   
-  def process(lead, matching_data)
+  def process(lead, match_data)
     # How many times this rule has been applied to a given Lead
     count = LeadEventRuleCount.find_by_lead_id_and_event_rule_id(lead, self) ||
             LeadEventRuleCount.new(:lead => lead, :event_rule => self)
     # Don't apply this rule more than limit_per_lead, if set
     unless limit_per_lead.present? && count.count > limit_per_lead
       # If :match is present, only apply the rule if data matches string
-      if match.blank? || matching_data.include?(match)
+      if match.blank? || event_matches?(match_data)
         # Run the action method if defined
         if respond_to?(action)
           send(action, lead)
@@ -46,6 +46,19 @@ class EventRule < ActiveRecord::Base
   end
   
   private
+  def event_matches?(match_data)
+    match_string = case event_category
+    when 'cloudfuji_event_received'; match_data.inspect  # Data hash => string
+    when 'lead_attribute_changed';   match_data[1]       # New value
+    end
+    match_string.downcase! if case_insensitive_matching
+    test_string = case_insensitive_matching ? match.downcase : match
+    case event_category
+    when 'cloudfuji_event_received'; match_string.include?(test_string)  # Includes match 
+    when 'lead_attribute_changed';   match_string == test_string         # Equals match
+    end
+  end
+  
   def human_event_label
     case event_category
     when 'cloudfuji_event_received'; "Cloudfuji Event - '#{cloudfuji_event}'"
