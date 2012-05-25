@@ -87,7 +87,7 @@ class EventRule < ActiveRecord::Base
       match_string.downcase! if case_insensitive_matching
       match_string.include?(test_string) 
     when 'lead_attribute_changed'
-      match_string = match_data[1]
+      match_string = match_data[1].dup
       match_string.downcase! if case_insensitive_matching
       match_string == test_string
     end
