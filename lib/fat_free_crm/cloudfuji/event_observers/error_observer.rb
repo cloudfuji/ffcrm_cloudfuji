@@ -2,6 +2,7 @@ module FatFreeCRM
   module Cloudfuji
     module EventObservers
       class ErrorObserver < ::Cloudfuji::EventObserver
+        include ActionView::Helpers::TextHelper
 
         def error_caught
           email = data['email'] || data['recipient']
@@ -11,8 +12,9 @@ module FatFreeCRM
             lead ||= Lead.find_by_email(user_attributes['email'])
             if lead
               occurence = ActiveSupport::Inflector.ordinalize(data['occurrences'])
-              message = "Error occurred for the #{occurence} time in #{data['app_name']} [#{data['environment_name']}]"
-              message << " - View the error at: #{data['url']}" if data['url']
+              message = "Error occurred in <strong>#{data['app_name']}</strong> [#{data['environment_name']}] (#{occurence} time): "
+              message << "<em>" << truncate(data['message'], :length => 75) << "</em>"
+              message << "<br />View the error at: #{data['url']}" if data['url']
               lead.versions.create! :event => message
             end
           end
