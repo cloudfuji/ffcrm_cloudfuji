@@ -42,8 +42,11 @@ module FatFreeCRM
             return result if result
           end
 
-          lead   = Lead.find_by_ido_id(data['customer_ido_id'])
-          lead ||= Lead.find_by_email(data['email'])
+          lead = if data['customer_ido_id'].present?
+            Lead.find_by_ido_id(data['customer_ido_id'])
+          else
+            Lead.find_by_email(data['email'])
+          end
           lead ||= Lead.new
 
           lead.email      = data['email']

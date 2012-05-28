@@ -79,8 +79,11 @@ module FatFreeCRM
           end
 
           puts "No pre-existing records found, creating a lead"
-          lead   = Lead.find_by_ido_id(data['customer_ido_id'])
-          lead ||= Lead.find_by_email(recipient)
+          lead = if data['customer_ido_id'].present?
+            Lead.find_by_ido_id(data['customer_ido_id'])
+          else
+            Lead.find_by_email(recipient)
+          end
           lead ||= Lead.new
 
           lead.email      = recipient
