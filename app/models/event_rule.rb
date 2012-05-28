@@ -54,15 +54,11 @@ class EventRule < ActiveRecord::Base
       when 'lead_attribute_changed'
         "Lead \"#{lead.full_name}\" was updated - #{lead_attribute} was changed from '#{match_data[0]}' to '#{match_data[1]}'."
       end
-      
-      event = {
-        :category => :fat_free_crm,
-        :name     => :notification,
-        :data     => {
-          :message  => message
-        }
-      }
-      ::Cloudfuji::Event.publish(event)
+
+      User.all.each do |user|
+        user.notify(lead.full_name, message, "crm") if !user.ido_id.nil?
+      end
+
     end
   end
   
