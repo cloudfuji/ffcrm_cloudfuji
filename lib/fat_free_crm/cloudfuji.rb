@@ -42,6 +42,7 @@ module FatFreeCRM
       end
 
       def load_observers!
+        require File.expand_path("../cloudfuji/event_observers/base", __FILE__)
         Dir[File.expand_path("../cloudfuji/event_observers/*.rb", __FILE__)].each { |file| require file }
       end
 

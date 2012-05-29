@@ -2,6 +2,8 @@ module FatFreeCRM
   module Cloudfuji
     module EventObservers
       class UserObserver < ::Cloudfuji::EventObserver
+        include FatFreeCRM::Cloudfuji::EventObservers::Base
+
         def user_added
           data = params['data']
           ido_id = data['ido_id'].to_s

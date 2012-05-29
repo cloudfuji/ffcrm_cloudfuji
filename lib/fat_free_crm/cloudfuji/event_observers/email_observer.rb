@@ -2,7 +2,7 @@ module FatFreeCRM
   module Cloudfuji
     module EventObservers
       class EmailObserver < ::Cloudfuji::EventObserver
-        # NOTE: It'd be nice to have a before_filter.
+        include FatFreeCRM::Cloudfuji::EventObservers::Base
 
         # "email_delivered"
         # :message_headers  => "[[\"Received\", \"by luna.mailgun.net with SMTP mgrt 7313261; Tue, 20 Mar 2012 19:00:58 +0000\"], [\"Received\", \"from localhost.localdomain (ec2-23-20-14-40.compute-1.amazonaws.com [23.20.14.40]) by mxa.mailgun.org with ESMTP id 4f68d3e9.4ddcdf0-luna; Tue, 20 Mar 2012 19:00:57 -0000 (UTC)\"], [\"Date\", \"Tue, 20 Mar 2012 19:00:57 +0000\"], [\"From\", \"Sean Grove <sean@cloudfuji.com>\"], [\"Reply-To\", \"Cloudfuji Team <support@cloudfuji.com>\"], [\"Message-Id\", \"<4f68d3e9ad834_3c29377ea432615@ip-10-190-150-17.mail>\"], [\"X-Mailgun-Campaign-Id\", \"cloudfuji_buddies\"], [\"Repy-To\", \"support@cloudfuji.com\"], [\"To\", \"s+cfdemo@cloudfuji.com\"], [\"Subject\", \"Cloudfuji Beta: Thank you for your early support. Here's a gift for you.\"], [\"List-Unsubscribe\", \"<mailto:u+na6wcn3gmqzdszbsmrrdam3ghfstkzrxgbstgn3fgvtdgzjumvrgmyzgmm6tqnlkgetheplteuzeey3gmrsw23zfgqyge5ltnbus4zdpez2d2jjsietgipjrmi4a@email.cloudfuji.com>\"], [\"X-Mailgun-Sid\", \"WyI2NWQ4MSIsICJzK2NmZGVtb0BidXNoaS5kbyIsICIxYjgiXQ==\"], [\"Sender\", \"sean=cloudfuji.com@cloudfuji.com\"]]"
@@ -66,42 +66,6 @@ module FatFreeCRM
           subject.versions.create! :event => message
         end
 
-        def data
-          params['data']
-        end
-
-        def find_or_create_activity_subject!
-          lookups = [Account, Lead, Contact]
-          lookups.each do |model|
-            puts "#{model}.find_by_email( #{recipient} )"
-            result = model.find_by_email(recipient)
-            return result if result
-          end
-
-          puts "No pre-existing records found, creating a lead"
-          lead = if data['customer_ido_id'].present?
-            Lead.find_by_ido_id(data['customer_ido_id'])
-          else
-            Lead.find_by_email(recipient)
-          end
-          lead ||= Lead.new
-
-          lead.email      = recipient
-          lead.ido_id     = data['customer_ido_id']
-          lead.first_name = recipient.split("@").first if lead.first_name.blank?
-          lead.last_name  = recipient.split("@").last  if lead.last_name.blank?
-          lead.user       ||= User.first
-
-          puts "About to save:"
-          puts lead.inspect
-
-          lead.save!
-
-          puts lead.inspect
-
-          lead
-        end
-
         # Temp workarounds until umi delivers events properly
         # Good example of the necessity of deep-schema enforcement for events
         def headers
@@ -110,10 +74,6 @@ module FatFreeCRM
           rescue => e
             return []
           end
-        end
-
-        def recipient
-          data['recipient']
         end
 
         def custom_variables

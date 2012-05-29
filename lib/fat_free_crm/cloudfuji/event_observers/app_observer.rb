@@ -2,11 +2,12 @@ module FatFreeCRM
   module Cloudfuji
     module EventObservers
       class AppObserver < ::Cloudfuji::EventObserver
+        include FatFreeCRM::Cloudfuji::EventObservers::Base
+
         def app_claimed
           # Be verbose in development environment
           debug = Rails.env == 'development'
 
-          data = params['data']
           ido_id = data.try(:[], 'ido_id')
 
           if user = User.find(:first, :conditions => ["email = ? OR ido_id = ?", data['email'], data['ido_id']])

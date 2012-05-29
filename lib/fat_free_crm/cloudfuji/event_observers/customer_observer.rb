@@ -2,6 +2,8 @@ module FatFreeCRM
   module Cloudfuji
     module EventObservers
       class CustomerObserver < ::Cloudfuji::EventObserver
+        include FatFreeCRM::Cloudfuji::EventObservers::Base
+
         # "customer_created"
         # :account_balance => 0
         # :object          => "customer"
@@ -30,34 +32,6 @@ module FatFreeCRM
           subject.versions.create! :event => message
         end
 
-        def data
-          params['data']
-        end
-
-        def find_or_create_activity_subject!
-          lookups = [Account, Lead, Contact]
-          lookups.each do |model|
-            puts "#{model}.find_by_email( #{data['email']} )" if @debug
-            result = model.find_by_email(data['email'])
-            return result if result
-          end
-
-          lead = if data['customer_ido_id'].present?
-            Lead.find_by_ido_id(data['customer_ido_id'])
-          else
-            Lead.find_by_email(data['email'])
-          end
-          lead ||= Lead.new
-
-          lead.email      = data['email']
-          lead.ido_id     = data['customer_ido_id']
-          lead.first_name = data['first_name'] || data['email'].split("@").first if lead.first_name.blank?
-          lead.last_name  = data['last_name']  || data['email'].split("@").last  if lead.last_name.blank?
-          lead.user       ||= User.first
-          lead.save!
-
-          lead
-        end
       end
     end
   end
