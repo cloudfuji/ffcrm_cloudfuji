@@ -38,7 +38,7 @@ module FatFreeCRM
                   :user       => User.first)
 
           lead.first_name = data['first_name'] if data['first_name'].present?
-          lead.first_name = data['last_name']  if data['last_name'].present?
+          lead.last_name  = data['last_name']  if data['last_name'].present?
           
           lead.save!
           
