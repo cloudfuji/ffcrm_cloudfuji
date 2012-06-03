@@ -1,5 +1,5 @@
 class EventRule < ActiveRecord::Base
-  
+
   # event category validations
   validates_presence_of :event_category
   validates_presence_of :cloudfuji_event, :if => lambda { self.event_category == 'cloudfuji_event_received' }
@@ -13,7 +13,7 @@ class EventRule < ActiveRecord::Base
   validates_numericality_of :limit_per_lead,  :only_integer => true, :allow_blank => true
 
   has_many :lead_event_rule_counts
-  
+
   def process(lead, match_data)
     # How many times this rule has been applied to a given Lead
     count = LeadEventRuleCount.find_by_lead_id_and_event_rule_id(lead, self) ||
@@ -34,7 +34,7 @@ class EventRule < ActiveRecord::Base
       end
     end
   end
-  
+
   # Actions
   # -----------------------------------------------------------------
   def change_lead_score(lead, match_data)
@@ -44,7 +44,7 @@ class EventRule < ActiveRecord::Base
     # Add history event to lead, to record change of score
     lead.versions.create! :event => "Rule for #{human_event_label}: Score changed by #{change_score_by} points. (New total: #{lead.score})"
   end
-  
+
   def send_notification(lead, match_data)
     if ::Cloudfuji::Platform.on_cloudfuji?
       # Fire a Cloudfuji event
@@ -61,43 +61,43 @@ class EventRule < ActiveRecord::Base
 
     end
   end
-  
+
   def add_tag(lead, match_data)
     lead.tag_list << tag
     save_lead_without_versioning_or_observers(lead)
     lead.versions.create! :event => "Rule for #{human_event_label}: Added tag '#{tag}'"
   end
-  
+
   def remove_tag(lead, match_data)
     lead.tag_list -= [tag]
     save_lead_without_versioning_or_observers(lead)
     lead.versions.create! :event => "Rule for #{human_event_label}: Removed tag '#{tag}'"
   end
-  
-  
+
+
   private
-  
+
   def event_matches?(match_data)
     test_string = case_insensitive_matching ? match.downcase : match
     case event_category
     when 'cloudfuji_event_received'
       match_string = match_data.inspect
       match_string.downcase! if case_insensitive_matching
-      match_string.include?(test_string) 
+      match_string.include?(test_string)
     when 'lead_attribute_changed'
-      match_string = match_data[1].dup
+      match_string = match_data[1].to_s.dup
       match_string.downcase! if case_insensitive_matching
-      match_string == test_string
+      match_string == test_string.to_s
     end
   end
-  
+
   def human_event_label
     case event_category
     when 'cloudfuji_event_received'; "Cloudfuji event - '#{cloudfuji_event}'"
     when 'lead_attribute_changed';   "Lead update - '#{lead_attribute}'"
     end
   end
-  
+
   def save_lead_without_versioning_or_observers(lead)
     Lead.observers.disable :cloudfuji_lead_observer do
       lead.without_versioning do
