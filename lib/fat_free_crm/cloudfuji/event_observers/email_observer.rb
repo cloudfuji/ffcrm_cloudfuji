@@ -85,6 +85,10 @@ module FatFreeCRM
           campaign ||= headers.select{|key, value| key == "X-Mailgun-Campaign-Id"}.try(:first).try(:last) unless headers.empty?
           campaign
         end
+
+        def recipient
+          data['email'] || data['recipient']
+        end
       end
     end
   end
