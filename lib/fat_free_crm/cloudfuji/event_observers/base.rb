@@ -30,12 +30,18 @@ module FatFreeCRM
           end
 
           puts "No pre-existing records found, creating a lead"
-          lead = Lead.create!(
+          lead = Lead.new(
                   :email      => email,
                   :ido_id     => data['customer_ido_id'],
                   :first_name => email.split("@").first,
                   :last_name  => email.split("@").last,
                   :user       => User.first)
+
+          lead.first_name = data['first_name'] if data['first_name'].present?
+          lead.first_name = data['last_name']  if data['last_name'].present?
+          
+          lead.save!
+          
           lead
         end
 
