@@ -1,0 +1,95 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"> 
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en"> 
+<!--[if !IE 7]>
+    <style type="text/css">
+      #wrap {display:table;height:100%}
+      </style>
+<![endif]--> 
+<head> 
+  <link rel="stylesheet" type="text/css" href="CSS/reset_styles.css" /> 
+  <link rel="stylesheet" type="text/css" href="CSS/main.css" /> 
+  <link rel="stylesheet" href="CSS/nivo-slider.css" type="text/css" media="screen" />
+  <link rel="stylesheet" href="CSS/default.css" type="text/css" media="screen" />
+  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js" type="text/javascript"></script>
+  <script src="jscript/jquery.nivo.slider.pack.js" type="text/javascript"></script>
+<script type="text/javascript">
+$(window).load(function() {
+    $('#slider').nivoSlider({
+        effect:'fade', // Specify sets like: 'fold,fade,sliceDown'
+        animSpeed:500, // Slide transition speed
+        pauseTime:7000, // How long each slide will show
+        startSlide:0, // Set starting Slide (0 index)
+        directionNav:false, // Next & Prev navigation
+    });
+});
+</script>
+  <title>Fat Free CRM</title> 
+</head> 
+<body> 
+  <!--Main Content-->
+  <div id="wrap"> 
+    <div id="header"> 
+      <div class="logo">
+	<a href="/"><img src="images/logo.png"/></a>
+      </div>
+      <!--start nav bar--> 
+      <ul id="list-nav"> 
+	<li><a href="#">Signup</a></li> 
+	<li><a href="http://guides.fatfreecrm.com/">Guides</a></li> 
+	<li><a href="http://github.com/fatfreecrm/fat_free_crm/downloads">Downloads</a></li>
+	<li><a href="#">Updates</a></li> 
+      </ul> 
+      <!--end nav bar--> 
+    </div> 
+    <div id="main"> 
+      <div id="container"> 
+	<p class="pitch body">You earned your clients with diligence; keep them with Fat Free CRM.
+	  <div class="center">
+	    <p class="body">What is Fat Free CRM?</p>
+	    <p class="small">An open source CRM designed to be<br/>highly customizable; elegant in simplicity.</p>
+	    <p class="body">How do I get started?</p>
+	    <p class="small">Fat Free requires no software or hours of<br/>configuration, simply the click of a button.</p>
+	    <div id="launch">
+	      <div class="launch">
+	      <a href="#"></a>
+	      </div>
+	     <a href="http://bushi.do"><p>Powered by Sofuji<img class="mini_logo" src="images/sofuji-white.png" /></p></a>
+	      <span></span>
+	      <a href="https://github.com/michaeldv/fat_free_crm"><p>Source available on Github<img class="mini_logo" src="images/github-white.png" /></p></a>
+	    </div>	    
+	    <div id="back" class="slider-wrapper theme-default">
+	      <div id="slider" class="nivoSlider back">
+		<img src="images/1.jpg" alt="" title="This is a caption" />
+		<img src="images/2.jpg" alt="" title="Here is another caption" />
+		<img src="images/3.jpg" alt="" title="And yet another caption" />
+	      </div>
+	    </div>
+	  </div>
+	<p class="body else">Look who else is using Fat Free CRM!</p>
+	<p class="names">Cyberdyne Systems <span class="grey">The Korova Milkbar</span><span class="light_grey"> Paper Street Soap Company</span> The Leftorium<br/><span class="grey">Dunder Mifflin</span><span class="light_grey"> Wolfram and Heart</span> Stay Puft Corporation<span class="grey"> Oceanic Airlines</span></p>
+	</div> 
+      </div> 
+      <!--Footer-->
+      <div id="footer" > 
+	<div class="info">
+	  <p class="heading">Information</p>
+	  <a href="#">FAQ</a><br/>
+	  <a href="#">How to make a module</a><br/>
+	  <a href="#">How to submit your module</a>
+	</div>
+	<div class="res">
+	  <p class="heading">Great Resources</p>
+	  <a href="http://beta.opensourcerails.com">Opensource Rails</a><br/>
+	  <a href="http://bushi.do">Sofuji</a><br/>
+	  <a href="https://github.com/">Github</a>
+	</div>	
+	<div class="leg">
+	  <p class="heading">Legal</p>
+	  <a href="#">License: MIT</a><br/>
+	</div>
+      </div> 
+      
+    </body> 
+  </html>
