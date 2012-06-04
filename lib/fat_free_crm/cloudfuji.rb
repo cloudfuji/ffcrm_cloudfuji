@@ -3,9 +3,12 @@ module FatFreeCRM
     class << self
       def enable_cloudfuji!
         load_observers!
-        extend_user!
         extend_lead!
-        setup_authentication!
+        # Prevent User class from loading if database is empty
+        if (User.table_exists? rescue false)
+          extend_user!
+          setup_authentication!
+        end
       end
 
       def extend_user!
