@@ -8,8 +8,8 @@ module FatFreeCRM
         def catch_all
           if lead = find_lead_by_data
             event_name = "#{params['category']}_#{params['event']}"
-            EventRule.find_all_by_event_category_and_cloudfuji_event('cloudfuji_event_received', event_name).each do |rule|
-              rule.process(lead, params['data'])
+            EventRule.find(:all, :conditions => ["event_category IN ('cloudfuji_event_received', 'page_loaded') AND cloudfuji_event = ?", event_name]).each do |rule|
+              rule.process(lead, params)
             end
           end
         end

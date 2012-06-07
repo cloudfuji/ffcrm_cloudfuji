@@ -14,10 +14,15 @@ ul#event_rules {
       vertical-align: middle;
       margin-bottom: 3px;
     }
-    .cloudfuji_event { width: 120px; }
+    .cloudfuji_event_input { width: 120px; }
+    .page_name_input { width: 120px; }
+    .app_id_input { width: 110px; }
     .match_input { width: 140px; }
     .numeric_input { width: 35px; }
     .tag_input { width: 100px; }
+    .mailing_list_input { width: 100px; }
+    .mailing_list_group_input { width: 100px; }
+    .mailing_list_grouping_input { width: 120px; }
     input[type='checkbox'] {
       width: 14px;
       margin-left: 2px;

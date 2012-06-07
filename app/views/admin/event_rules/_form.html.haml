@@ -7,19 +7,24 @@
   = event_category_select(r)
 
   = event_fields_for(r.object, 'cloudfuji_event_received') do
-    = r.text_field :cloudfuji_event, :class => "cloudfuji_event"
+    = r.text_field :cloudfuji_event, :class => "cloudfuji_event_input"
     is received, and contains
+
+  = event_fields_for(r.object, 'page_loaded') do
+    = r.text_field :page_name, :class => "page_name_input"
+    on app ID
+    = r.text_field :app_id, :class => "app_id_input"
 
   = event_fields_for(r.object, 'lead_attribute_changed') do
     = r.select :lead_attribute, lead_attributes, :class => "lead_attribute", :include_blank => true
     changes, and equals
 
-  = content_tag(:small, "(optional)") << ":".html_safe
-  = r.text_field :match, :class => "match_input"
-
-  %small
-    (Case insensitive?
-    = r.check_box(:case_insensitive_matching) << h(")")
+  = event_fields_for(r.object, %w(cloudfuji_event_received lead_attribute_changed)) do
+    = content_tag(:small, "(optional)") << ":".html_safe
+    = r.text_field :match, :class => "match_input"
+    %small
+      (Case insensitive?
+      = r.check_box(:case_insensitive_matching) << h(")")
 
   then
   = action_select(r)
@@ -32,6 +37,17 @@
   -# Add/Remove tag actions share the same field
   = action_fields_for(r.object, %w(add_tag remove_tag)) do
     = r.text_field :tag, :class => "tag_input"
+
+  = action_fields_for(r.object, %w(add_to_mailing_list_group)) do
+    = r.text_field :mailing_list_group, :class => "mailing_list_group_input"
+    in grouping
+    = r.text_field :mailing_list_grouping, :class => "mailing_list_grouping_input"
+    on list
+    = r.text_field :mailing_list, :class => "mailing_list_input"
+    %br
+    -# TEMPORARY WORKAROUND
+    %small{:style => "margin-left:26px;display:inline-block;padding-top:14px;"} Umi user Ido ID:
+    = r.text_field :user_ido_id
 
   = action_fields_for(r.object, %w(change_lead_score send_notification)) do
     %small

@@ -10,16 +10,18 @@ module Admin::EventRulesHelper
   def event_category_select(form)
     form.select :event_category, [
       ["Cloudfuji event", :cloudfuji_event_received],
-      ["Lead attribute",   :lead_attribute_changed]
+      ["Page loaded",     :page_loaded],
+      ["Lead attribute",  :lead_attribute_changed]
     ], {}, :class => "event_category_select"
   end
 
   def action_select(form)
     form.select :action, [
-      ["change Lead score", :change_lead_score],
-      ["send notification", :send_notification],
-      ["add tag",           :add_tag],
-      ["remove tag",        :remove_tag]
+      ["change Lead score",    :change_lead_score],
+      ["send notification",    :send_notification],
+      ["add tag",              :add_tag],
+      ["remove tag",           :remove_tag],
+      ["add to mailing group", :add_to_mailing_list_group]
     ], {}, :class => "action_select"
   end
 

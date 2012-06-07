@@ -48,6 +48,11 @@
     $('.event_category_select').live "change", ->
       event_rules.show_field_group this, 'event_category', $(this).val()
 
+      # Set 'cloudfuji_event' to 'page_loaded' if event category is page_loaded.
+      if $(this).val() == "page_loaded"
+        index = $(this).closest('li.event_rule').data('index')
+        $("#event_rules_#{index}_cloudfuji_event").val('page_loaded')
+
     $('.action_select').live "change", ->
       event_rules.show_field_group this, 'action', $(this).val()
 
