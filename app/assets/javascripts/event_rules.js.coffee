@@ -35,7 +35,7 @@
   $(document).ready ->
     event_rules = new EventRules()
     # Initialize autocomplete for events
-    event_rules.cloudfuji_event_autocomplete()
+    event_rules.cloudfuji_event_autocomplete() if observed_cloudfuji_events?
 
     $("button.add_event_rule").live "click", ->
       event_rules.add_fields this, $(this).data("content")

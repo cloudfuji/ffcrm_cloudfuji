@@ -20,4 +20,11 @@ Rails.application.routes.draw do
       post :update, :on => :collection
     end
   end
+
+  resources :unknown_emails, :only => :index do
+    member do
+      delete :ignore
+      put    :convert
+    end
+  end
 end

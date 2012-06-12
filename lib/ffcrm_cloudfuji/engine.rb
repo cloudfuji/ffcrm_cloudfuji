@@ -13,9 +13,16 @@ module FatFreeCRM
         begin
           unless FatFreeCRM::Tabs.admin.any? {|t| t[:text] == "Event Rules" }
             FatFreeCRM::Tabs.admin << {
-            :text => "Event Rules",
-            :url => { :controller => "admin/event_rules" }
-          }
+              :text => "Event Rules",
+              :url => { :controller => "admin/event_rules" }
+            }
+          end
+
+          unless FatFreeCRM::Tabs.main.any? {|t| t[:text] == "Unknown Emails" }
+            FatFreeCRM::Tabs.main << {
+              :text => "Unknown Emails",
+              :url => { :controller => "unknown_emails" }
+            }
           end
         rescue TypeError
           puts "You must migrate your settings table."

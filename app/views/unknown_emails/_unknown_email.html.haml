@@ -1,0 +1,14 @@
+%tr.highlight[unknown_email]
+  - addresses = (unknown_email.direction == 'received' ? unknown_email.sent_from : unknown_email.sent_to).split(";")
+  %td= unknown_email.direction.to_s.capitalize
+  %td= unknown_email.sent_from
+  %td= unknown_email.sent_to
+  %td= truncate(unknown_email.subject, :length => 150)
+  %td= truncate(unknown_email.body, :length => 150)
+  %td
+    - addresses.each do |address|
+      = address
+      %p      
+        = link_to "Convert to Lead?", convert_unknown_email_path(unknown_email, :email => address), :method => :put
+        or
+        = link_to "Ignore?", ignore_unknown_email_path(unknown_email, :email => address), :method => :delete

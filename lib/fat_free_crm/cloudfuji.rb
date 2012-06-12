@@ -4,6 +4,7 @@ module FatFreeCRM
       def enable_cloudfuji!
         load_observers!
         extend_lead!
+				extend_email!
         # Prevent User class from loading if database is empty
         if (User.table_exists? rescue false)
           extend_user!
@@ -43,6 +44,24 @@ module FatFreeCRM
           has_many :lead_event_rule_counts
         end
       end
+
+			def extend_email!
+				Email.class_eval do
+					# Sent or received
+					def direction
+						attr_direction = super
+						return attr_direction if attr_direction.present? 
+						
+						# If direction not stored, try to deduce
+						# from from/to email addresses.
+						if sent_from.include?(user.email)
+							'sent'
+						elsif sent_to.include?(user.email)
+							'received'
+						end
+					end
+				end
+			end
 
       def load_observers!
         require File.expand_path("../cloudfuji/event_observers/base", __FILE__)
