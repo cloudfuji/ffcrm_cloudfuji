@@ -17,7 +17,7 @@ describe CloudfujiLeadObserver do
       :change_score_by => 5
     )    
     
-    EventRule.any_instance.should_receive(:process).with(@lead, ['Henry', 'George'])
+    EventRule.any_instance.should_receive(:process).with(@lead, {'old_value' => 'Henry', 'new_value' => 'George'})
     
     @lead.first_name = "George"
     @observer.after_update(@lead)
