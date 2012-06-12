@@ -21,7 +21,8 @@ class CloudfujiLeadObserver < ActiveRecord::Observer
   def after_update(lead)
     # Find all event rules where the lead attribute is one of the changed fields
     EventRule.find_all_by_event_category_and_lead_attribute('lead_attribute_changed', lead.changes.keys).each do |rule|
-      rule.process(lead, lead.changes[rule.lead_attribute])  # Send [old, new] values as matching data
+      old, new = lead.changes[rule.lead_attribute]
+      rule.process(lead, {'old_value' => old, 'new_value' => new})  # Send [old, new] values as matching data
     end
   end
 end

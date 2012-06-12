@@ -24,7 +24,7 @@ class EventRule < ActiveRecord::Base
     # Don't apply this rule more than limit_per_lead, if set
     unless limit_per_lead.present? && count.count > limit_per_lead
       # If :match is present, only apply the rule if data matches string
-      if match.blank? || (params['data'] && event_matches?(params))
+      if match.blank? || event_matches?(params)
         if (app_id.blank? && page_name.blank?) || page_and_app_matches?(params)
           # Run the action method if defined
           if respond_to?(action)
@@ -57,7 +57,7 @@ class EventRule < ActiveRecord::Base
       when 'cloudfuji_event_received'
         "Cloudfuji event was received - '#{cloudfuji_event}'"
       when 'lead_attribute_changed'
-        "Lead \"#{lead.full_name}\" was updated - #{lead_attribute} was changed from '#{match_data[0]}' to '#{match_data[1]}'."
+        "Lead \"#{lead.full_name}\" was updated - #{lead_attribute} was changed from '#{match_data['old_value']}' to '#{match_data['new_value']}'."
       end
 
       User.all.each do |user|
@@ -109,7 +109,7 @@ class EventRule < ActiveRecord::Base
       match_string.downcase! if case_insensitive_matching
       match_string.include?(test_string)
     when 'lead_attribute_changed'
-      match_string = params[1].to_s.dup
+      match_string = params['new_value'].to_s.dup
       match_string.downcase! if case_insensitive_matching
       match_string == test_string.to_s
     end
