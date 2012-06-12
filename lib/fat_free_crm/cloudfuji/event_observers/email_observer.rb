@@ -1,3 +1,5 @@
+require 'fat_free_crm/mail_processor/base'
+
 module FatFreeCRM
   module Cloudfuji
     module EventObservers
@@ -57,6 +59,31 @@ module FatFreeCRM
           note_email_activity("#{email} subscribed to a mailing list")
         end
 
+        def email_received
+          user = find_user_by_account
+          return unless user
+          lead = Lead.find_by_email(data['from'])
+          create_email_from_data(
+            :direction => 'received',
+            :mediator  => lead,
+            :user      => user
+          )
+        end
+
+        def email_sent
+          user = find_user_by_account
+          return unless user
+          # Find first Lead from 'to' email addresses
+          lead = data['to'].to_s.split(";").detect do |email|
+            lead = Lead.find_by_email(email)
+          end
+          create_email_from_data(
+            :direction => 'sent',
+            :mediator  => lead,
+            :user      => user
+          )
+        end
+
         private
 
         def note_email_activity(message)
@@ -86,6 +113,32 @@ module FatFreeCRM
           campaign
         end
 
+        def find_user_by_account
+          user = User.find_by_email(data['account'])
+          puts "No User found by email #{data['account']}" unless user
+          user
+        end
+
+        def create_email_from_data(options)
+          mail = Mail.new(data['rfc822'])
+          text_body = FatFreeCRM::MailProcessor::Base.new.send(:plain_text_body, mail)
+           
+          # Remove ID hashes from emails (e.g. ...+23423fce32d@...)
+          # This is important so that addresses like 
+          # reply+****@reply.github.com can be ignored.
+          to_address = data['to'].gsub(/\+[^@]+/, '')
+          from_address = data['from'].gsub(/\+[^@]+/, '')
+
+          Email.create({
+            :imap_message_id => data['uid'],
+            :sent_from       => from_address,
+            :sent_to         => to_address,
+            :cc              => data['cc'],
+            :subject         => data['subject'],
+            :body            => text_body,
+            :sent_at         => data['date']
+          }.merge(options))
+        end
       end
     end
   end

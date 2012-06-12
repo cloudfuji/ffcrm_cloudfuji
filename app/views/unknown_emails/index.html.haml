@@ -1,0 +1,22 @@
+= styles_for :unknown_emails
+
+.title
+  %span#unknown_emails_title Unknown Emails
+
+.list
+  - if @unknown_emails.any?
+    %table.unknown_emails
+      %thead
+        %tr
+          %th Direction
+          %th From
+          %th To
+          %th Subject
+          %th Body
+          %th Actions
+      %tbody#unknown_emails
+        = render :partial => 'unknown_email', :collection => @unknown_emails
+  - else
+    Could not find any emails for unknown leads.
+
+#paginate= render "shared/paginate"

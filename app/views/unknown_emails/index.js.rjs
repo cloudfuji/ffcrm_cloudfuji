@@ -1,0 +1,6 @@
+if @unknown_emails.any?
+  page[:unknown_emails].replace_html render(:partial => "unknown_email", :collection => @unknown_emails)
+else
+  page[:unknown_emails].replace_html render(:text => "Could not find any emails for unknown leads.")
+end
+page[:paginate].replace_html render(:partial => "shared/paginate")
